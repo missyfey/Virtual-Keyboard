@@ -1,0 +1,62 @@
+.keyboard-container{
+    background: rgb(0, 81, 95);
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width:100%;
+    transition: bottom 0.5s; 
+    width: 100%;  
+    text-align: center; 
+}
+.keyboard{
+    padding:20px;
+    
+}
+.keyboard-button{
+    outline: none;
+    background: rgba(255,255,255, 30%);
+    color:white;
+    border: none;
+    font-size: 1.05em;
+    width: 8%;
+    height: 35px;
+    max-width: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: .1em;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: top;
+    position: relative;
+}
+.wide-button{
+    width: 16%;
+    max-width: 60px;
+}
+.extra-wide-button{
+    width: 36%;
+    max-width: 200px;
+}
+.hide{
+bottom: -1000px;
+}
+.capslock::after{
+    content:'';
+    position: absolute;
+    right:5px;
+    top:5px;
+    width: 7px;
+    height: 7px;
+    background: rgb(0, 81, 95);
+    border-radius: 50%;
+}
+.capslockActive::after{
+background: rgb(0, 255, 0);
+}
+.dark{
+    background: rgb(2, 46, 54);
+}
+.active{
+    background: rgba(255,255,255, 15%);
+}
