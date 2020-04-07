@@ -11,13 +11,14 @@ const keyboard = {
         capslock: false
     },
     createKey(){
-        var keyList = ['1','2','3','4','5','6','7','8','9','0','backspace',
-                    'q','w','r','t','y','u','i','o','p',
+        var keyLayout = ['1','2','3','4','5','6','7','8','9','0','backspace',
+                    'q','w', 'e','r','t','y','u','i','o','p',
                     'capslock','a','s','d','f','g','h','j','k','l','enter',
                     'done','z','x','c','v','b','n','m',',','.','?',
                 'spacebar'];
         let fragment = document.createDocumentFragment();
-        keyList.forEach((key)=>{
+
+        keyLayout.forEach((key)=>{
             var newKey = document.createElement('button');
             newKey.setAttribute('type', 'button');
             newKey.classList.add('keyboard-button');
@@ -59,7 +60,11 @@ const keyboard = {
                 break;
 
                 default:
-                    this.properties.capslock ? newKey.textContent = key.toUpperCase() : newKey.textContent = key.toLowerCase();
+                    if(this.properties.capslock){
+                        newKey.textContent = key.toUpperCase();}
+                    else{
+                        newKey.textContent = key.toLowerCase();
+                    }
                     
                     newKey.addEventListener('click', function(){
                         keyboard.onInput(newKey.textContent);
@@ -91,18 +96,23 @@ const keyboard = {
         this.elements.main.appendChild(this.elements.keyContainer);
         this.elements.keyContainer.appendChild(this.createKey());  
         document.body.appendChild(this.elements.main);
+        this.elements.keys = document.querySelectorAll('.keyboard-button');
     },
     open(){
         this.elements.main.classList.remove('hide');
     },
     close(){
         this.elements.main.classList.add('hide');
-        this.properties.capslock = false;
-        this.properties.value = '';
     },
     toggleCapslock(){
         this.properties.capslock = !this.properties.capslock;
-        document.querySelector('.capslock').classList.toggle('capslockActive');
+        document.querySelector('.capslock').classList.toggle('capslockActive' , this.properties.capslock);
+        //change keyboard letters to UPPER or lower case
+        this.elements.keys.forEach(key =>{
+            if(key.childElementCount === 0){
+                key.textContent = this.properties.capslock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        })
     },
     onInput(key){
         this.properties.value += key;
@@ -116,8 +126,10 @@ window.addEventListener('DOMContentLoaded', function(){
 })
 
 textArea.addEventListener('focus', ()=>{
-    keyboard.open();
-    
+    keyboard.open();    
 });
+textArea.addEventListener('keyup',function(){
+    keyboard.properties.value = this.value;
+})
 
 
